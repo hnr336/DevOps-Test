@@ -1,0 +1,30 @@
+---
+  - hosts: EC2Machines
+    become: yes
+    tasks:
+      - name: Install required softwares
+        apt: pkg={{ item }} update_cache=yes cache_valid_time=3600
+        with_items:
+          - git
+          - curl
+          - build-essential
+          - libssl-dev
+          - openssl
+          - docker
+          - docker-compose
+
+      - name: Install nvm
+        git: repo=https://github.com/creationix/nvm.git dest=~/.nvm version=v0.33.2
+
+      - name: Source nvm in ~/.bashrc
+        lineinfile: >
+          dest=~/.bashrc
+          line="source ~/.nvm/nvm.sh"
+          create=yes
+
+      - name: Install Node
+        shell: '. {{ ansible_env.HOME }}/.nvm/nvm.sh && nvm install 8.12.0'
+        args:
+          creates: "{{ ansible_env.HOME }}/.nvm/versions/node"
+          chdir: "{{ ansible_env.HOME }}"
+          executable: /bin/bash
