@@ -1,0 +1,6 @@
+version: "2"
+
+services:
+  db:
+    image: apache/couchdb
+    ports: ["9980:5984"]
