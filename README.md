@@ -28,3 +28,8 @@ Step5: Using ansible to run docker-compose file in EC2 machines
 *command: ansible-playbook ansible-docker.yml
 
 
+To access Apache webserver
+http://18.206.154.55:8080/
+
+To access CouchDB futon 
+http://3.83.22.181:9980/
